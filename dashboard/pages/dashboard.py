@@ -40,7 +40,13 @@ st.markdown('''**Conclusion**: The age distribution of titanic passenges is righ
 
 #  Add bar chart for survival count. Add pie chart for passengers class In the dashboard
 
+survival_count = sidebar.multiselect("survived",options=df['survived'].unique())
 
+if survival_count:
+    filtered_df = filtered_df[filtered_df["survived"].isin(survival_count)]
 
+fig2 = px.bar(filtered_df,x = "survived",y= "pclass",title="Survival count based on pclass")
+
+st.plotly_chart(fig2)
 
 
