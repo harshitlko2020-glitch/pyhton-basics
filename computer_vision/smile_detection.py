@@ -1,0 +1,26 @@
+import cv2
+
+
+cap = cv2.VideoCapture(0)
+#load model
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_smile.xml')
+
+while True:
+    isOpen , frame = cap.read()
+
+    if not isOpen:
+        break
+    gray_frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+
+    faces = face_cascade.detectMultiScale(gray_frame,scaleFactor=1.1,minNeighbors=5)
+
+    for (x,y,w,h) in faces:
+        cv2.rectangle(gray_frame,(x,y),(x+w,y+h),(0,255,0),2)
+
+    cv2.imshow('Face Detection',gray_frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
